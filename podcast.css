@@ -1,0 +1,95 @@
+/* General Styles */
+body {
+    background-color: #001F3F; /* Dark Blue */
+    color: #EAD8B1; /* Light Beige */
+    font-family: "Style Script";
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    background-color: #3A6D8C; /* Medium Blue */
+    padding: 40px 0;
+    text-align: center;
+}
+
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; /* Bold style */
+    color: #EAD8B1;
+    font-size: 3rem; /* Adjust as needed */
+}
+
+header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+    color: #EAD8B1; /* Light Beige */
+}
+
+.container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out the sections */
+    padding: 20px;
+
+}
+
+.episode {
+    flex: 1; /* Allow the episode section to grow */
+    margin: 10px; /* Margin between sections */
+    padding: 20px; /* Padding */
+    background-image: url('IMG_2327.jpg'); /* Background image */
+    background-size: cover; /* Ensure the image covers the section */
+    background-position: center; /* Center the image */
+    color: #EAD8B1; /* Light Beige */
+}
+
+.comments {
+    flex: 1; /* Allow the comments section to grow */
+    margin: 10px; /* Margin between sections */
+    padding: 20px; /* Padding */
+    background-color: #3A6D8C; /* Medium Blue */
+    color: #EAD8B1; /* Light Beige */
+    height: 500px; /* Fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.comments-list {
+    max-height: 400px; /* Maximum height for the comment list */
+    overflow-y: auto; /* Enable scrolling for comments */
+    margin-bottom: 10px; /* Space below the comment list */
+}
+
+.add-comment {
+    /* Optional styles for the comment input area */
+    display: flex; /* Flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+textarea {
+    height: 80px; /* Fixed height for the textarea */
+    margin-bottom: 10px; /* Space below the textarea */
+}
+
+
+.delete-comment {
+    background-color: #FF4C4C; /* Red color for the delete button */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 5px 10px; /* Padding */
+    margin-left: 10px; /* Space between comment text and button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.delete-comment:hover {
+    background-color: #FF0000; /* Darker red on hover */
+}

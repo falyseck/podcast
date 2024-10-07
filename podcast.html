@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast La Vingtaine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="podcast.css">
+
+
+</head>
+<body>
+    <header>
+        <h1>Wouy Yay, La vingtaine</h1>
+        <p>L'espace des jeunes.</p>
+    </header>
+
+    <div class="container">
+    <section class="episode">
+        <h2>Latest Episode: How to Manage Stress</h2>
+        <audio controls>
+            <source src="episode1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <p>In this episode, we discuss practical ways to manage stress in your 20s...</p>
+    </section>
+
+    <section class="comments">
+        <h3>User Comments</h3>
+        <div id="comments-list" class="comments-list"></div>
+        <div class="add-comment">
+            <textarea id="comment-input" placeholder="Add your comment..."></textarea>
+            <button id="submit-comment">Submit Comment</button>
+        </div>
+    </section>
+</div>
+
+
+    <footer>
+        <p>&copy; 2024 WOUYAY, LA VINGTAINE</p>
+    </footer>
+
+    <script>
+  const adminUser = 'admin'; // Your admin username
+
+// Function to display comments
+function displayComments() {
+    const commentsList = document.getElementById('comments-list');
+    commentsList.innerHTML = ''; // Clear existing comments
+
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    comments.forEach((comment, index) => {
+        const commentDiv = document.createElement('div');
+        commentDiv.className = 'comment';
+        commentDiv.textContent = comment.text; // Assuming each comment has a text property
+
+        // Show delete button only for admin
+        if (comment.user === adminUser) {
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete-comment';
+            deleteButton.onclick = () => deleteComment(index); // Call deleteComment with the index
+            commentDiv.appendChild(deleteButton);
+        }
+
+        commentsList.appendChild(commentDiv);
+    });
+}
+
+// Function to add a comment (updated to include user info)
+function addComment() {
+    const commentInput = document.getElementById('comment-input');
+    const comment = commentInput.value.trim();
+
+    if (comment) {
+        const comments = JSON.parse(localStorage.getItem('comments')) || [];
+        comments.push({ text: comment, user: adminUser }); // Store comment with user info
+        localStorage.setItem('comments', JSON.stringify(comments));
+        commentInput.value = ''; // Clear input
+        displayComments(); // Refresh the comments display
+    } else {
+        alert("Please enter a comment."); // Alert if the comment is empty
+    }
+}
+
+// Function to delete a comment
+function deleteComment(index) {
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    comments.splice(index, 1); // Remove the comment at the specified index
+    localStorage.setItem('comments', JSON.stringify(comments)); // Update local storage
+    displayComments(); // Refresh the comments display
+}
+
+// Event listener for the submit button
+document.getElementById('submit-comment').addEventListener('click', addComment);
+
+// Display comments on page load
+window.onload = displayComments;
+
+    </script>
+</body>
+</html>
