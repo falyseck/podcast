@@ -20,7 +20,6 @@ header {
     text-align: center;
 }
 
-
 h1 {
     font-family: 'Playfair Display', serif;
     font-weight: 700; /* Bold style */
@@ -34,11 +33,11 @@ header p {
     color: #EAD8B1; /* Light Beige */
 }
 
+/* Flexbox Layout for Container */
 .container {
     display: flex; /* Use flexbox for layout */
     justify-content: space-between; /* Space out the sections */
     padding: 20px;
-
 }
 
 .episode {
@@ -69,7 +68,6 @@ header p {
 }
 
 .add-comment {
-    /* Optional styles for the comment input area */
     display: flex; /* Flexbox for layout */
     flex-direction: column; /* Stack elements vertically */
 }
@@ -78,7 +76,6 @@ textarea {
     height: 80px; /* Fixed height for the textarea */
     margin-bottom: 10px; /* Space below the textarea */
 }
-
 
 .delete-comment {
     background-color: #FF4C4C; /* Red color for the delete button */
@@ -92,4 +89,33 @@ textarea {
 
 .delete-comment:hover {
     background-color: #FF0000; /* Darker red on hover */
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack sections vertically */
+    }
+
+    h1 {
+        font-size: 2.5rem; /* Adjusted font size for mobile */
+    }
+
+    header p {
+        font-size: 1em; /* Smaller paragraph font size */
+    }
+
+    .episode, .comments {
+        width: 100%; /* Full width for both sections */
+        margin: 0; /* Remove margin for mobile */
+    }
+
+    .comments {
+        height: auto; /* Allow comments section to grow */
+    }
+
+    textarea {
+        width: 100%; /* Full width for the textarea */
+        height: 60px; /* Adjust height for mobile */
+    }
 }
