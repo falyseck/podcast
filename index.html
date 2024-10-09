@@ -42,62 +42,56 @@
     </footer>
 
     <script>
-  const adminUser = 'admin'; // Your admin username
+ // Function to load comments from the server
+function loadComments() {
+    fetch('/comments')
+        .then(response => response.json())
+        .then(data => {
+            const commentsList = document.getElementById('comments-list');
+            commentsList.innerHTML = ''; // Clear old comments
+            data.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.textContent = comment.text;
 
-// Function to display comments
-function displayComments() {
-    const commentsList = document.getElementById('comments-list');
-    commentsList.innerHTML = ''; // Clear existing comments
+                // Only show delete button if user is admin
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => deleteComment(comment.id);
+                commentDiv.appendChild(deleteButton);
 
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    comments.forEach((comment, index) => {
-        const commentDiv = document.createElement('div');
-        commentDiv.className = 'comment';
-        commentDiv.textContent = comment.text; // Assuming each comment has a text property
-
-        // Show delete button only for admin
-        if (comment.user === adminUser) {
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'delete-comment';
-            deleteButton.onclick = () => deleteComment(index); // Call deleteComment with the index
-            commentDiv.appendChild(deleteButton);
-        }
-
-        commentsList.appendChild(commentDiv);
-    });
+                commentsList.appendChild(commentDiv);
+            });
+        });
 }
 
-// Function to add a comment (updated to include user info)
+// Function to add a new comment
 function addComment() {
     const commentInput = document.getElementById('comment-input');
-    const comment = commentInput.value.trim();
-
-    if (comment) {
-        const comments = JSON.parse(localStorage.getItem('comments')) || [];
-        comments.push({ text: comment, user: adminUser }); // Store comment with user info
-        localStorage.setItem('comments', JSON.stringify(comments));
-        commentInput.value = ''; // Clear input
-        displayComments(); // Refresh the comments display
-    } else {
-        alert("Please enter a comment."); // Alert if the comment is empty
+    const commentText = commentInput.value.trim();
+    if (commentText) {
+        fetch('/comments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: commentText, user: 'admin' }) // Replace with dynamic user later
+        })
+        .then(() => {
+            commentInput.value = '';
+            loadComments(); // Refresh comments
+        });
     }
 }
 
 // Function to delete a comment
-function deleteComment(index) {
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    comments.splice(index, 1); // Remove the comment at the specified index
-    localStorage.setItem('comments', JSON.stringify(comments)); // Update local storage
-    displayComments(); // Refresh the comments display
+function deleteComment(commentId) {
+    fetch(`/comments/${commentId}`, { method: 'DELETE' })
+        .then(() => loadComments()); // Refresh comments
 }
 
-// Event listener for the submit button
 document.getElementById('submit-comment').addEventListener('click', addComment);
 
-// Display comments on page load
-window.onload = displayComments;
-
+// Load comments when the page loads
+window.onload = loadComments;
     </script>
 </body>
 </html>
